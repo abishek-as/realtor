@@ -32,7 +32,7 @@ export default function CreateListing() {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
     console.log(formData);
-    const handleImageSubmit = (e) => {
+    const handleImageSubmit = () => {
         if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
             setUploading(true);
             setImageUploadError(false);
@@ -50,7 +50,7 @@ export default function CreateListing() {
                     setImageUploadError(false);
                     setUploading(false);
                 })
-                .catch((err) => {
+                .catch(() => {
                     setImageUploadError(
                         "Image upload failed (2 mb max per image)"
                     );
@@ -290,7 +290,9 @@ export default function CreateListing() {
                             />
                             <div className="flex flex-col items-center">
                                 <p>Regular price</p>
-                                <span className="text-xs">(₹ / month)</span>
+                                {formData.type === "rent" && (
+                                    <span className="text-xs">(₹ / month)</span>
+                                )}
                             </div>
                         </div>
                         {formData.offer && (
@@ -307,7 +309,12 @@ export default function CreateListing() {
                                 />
                                 <div className="flex flex-col items-center">
                                     <p>Discounted price</p>
-                                    <span className="text-xs">(₹ / month)</span>
+
+                                    {formData.type === "rent" && (
+                                        <span className="text-xs">
+                                            (₹ / month)
+                                        </span>
+                                    )}
                                 </div>
                             </div>
                         )}
